@@ -427,6 +427,13 @@ def AddMoleculeColumnToFrame(frame, smilesCol='Smiles', molCol='ROMol', includeF
     frame[molCol] = frame[smilesCol].map(
       lambda smiles: _MolPlusFingerprint(Chem.MolFromSmiles(smiles)))
   RenderImagesInAllDataFrames(images=True)
+            
+def AddPatternColumnToFrame(frame, smartsCol='Smarts', molCol='ROMol'):
+  '''Converts the molecular patterns contained in "Smarts" to RDKit molecules and appends them to the
+    dataframe "frame" using the specified column name.
+    '''
+  frame[molCol] = frame[smartsCol].map(Chem.MolFromSmarts)
+  RenderImagesInAllDataFrames(images=True)
 
 
 def ChangeMoleculeRendering(frame=None, renderer='PNG'):
